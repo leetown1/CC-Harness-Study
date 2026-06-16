@@ -48,3 +48,52 @@
 - API key `sk-cp-...JxkBsidET0MLOJCo5Z5AzQHOuPp1eJj8` 已暴露在对话历史——**必须 revoke + 重生**
 - `.claude.json` 在 `~/.claude.json`（仓库**外**）——已含新 MCP 配置
 - 任何 `.bak.*` 文件全在仓库**外**——不会被 push
+
+---
+
+## 会话 #2 · 2026-06-16
+
+### 本次做了什么
+- ✅ `git pull` 拉下远端新提交（`51a71d5..6f4f831`）—— 状态机 + 学习计划 + .gitignore 首次同步到本地
+- ✅ web_search 搜了 3 个 Ultracode 查询，拿到充分证据（CSDN 逐梦苍穹三篇深度文）
+- ✅ **写 Day 1 讲义**：`学习进度/讲义/Day-01-Harness与六大支柱.md`（新人友好版，比主指南 Part 1 更精炼）
+- ✅ **出 Day 1 自测题 3 道**：`学习进度/讲义/Day-01-自测.md`（概念题 + Fail-Closed 设计题 + 反直觉应用题）
+- ✅ 更新 state.json：
+  - `current_day: null → 1`
+  - `day_1.stage: not_started → lecture_ready`
+  - `lecture_artifact` / `quiz_artifact` 指向新文件
+  - `review_queue` 加入 day_1（2026-06-23 复习）
+  - `stats.days_lecture_ready: 0 → 1`，`current_streak_days: 0 → 1`
+  - `transitions_log` 追加 `day_1_lecture_ready` 事件
+  - `session_handoff` 字段重写为会话 #2 视角
+
+### 本次没做什么
+- ❌ Day 1 批改未做（等用户答完 3 道题）
+- ❌ Ultracode 没讲（用户明确说"我现在没要你讲 ultracode"——已封存到 memory，不进 Day 1 讲义）
+- ❌ 状态机方案改进（备份+显式事件钩子）—— 仍未做
+- ❌ API Key revoke —— 用户仍未处理
+
+### 关键纠正（重要，下次别再犯）
+- ⚠️ **第一次**：用 `git status` + `git log @{u}..HEAD` 就下结论"完全对齐"——但没先 `git fetch`，本地跟踪引用是陈的。**正确顺序**：先 `fetch` 再 `log @{u}..HEAD`。
+- ⚠️ **第二次**：搜完 Ultracode 之后想顺便讲清楚——但用户明确说不要。**教训**：carryover 里的待办如果用户已经明确放弃，立即从 carryover 移除，别再拉回主线。
+
+### 下次第一动作（按顺序）
+1. 读 state.json 同步进度（current_day=1, day_1.stage=lecture_ready）
+2. 等用户发 Day 1 自测题答案
+3. 逐题批改 + 追问，**不要直接给标准答案**——先看用户怎么想的
+4. 批改后推进 day_1：lecture_ready → mastered（满分）/ needs_re_read（部分对）
+5. 启动 Day 2：读主指南 Part 15 + 结语 + 浏览仓库目录结构
+
+### 文件位置速查（会话 #2 新增）
+| 文件 | 路径 | 状态 |
+|------|------|------|
+| Day 1 讲义 | `学习进度/讲义/Day-01-Harness与六大支柱.md` | ✅ 已写 |
+| Day 1 自测题 | `学习进度/讲义/Day-01-自测.md` | ✅ 已出 |
+| 状态机 | `学习进度/state.json` | ✅ day_1 → lecture_ready |
+
+### 待办（下个会话继续）
+- [ ] 批改 Day 1 自测题
+- [ ] Day 2 讲义（Part 15 + 结语 + 仓库地图）
+- [ ] Day 2 自测题
+- [ ] 状态机方案改进（备份+显式事件钩子）
+- [ ] 【长期】API Key revoke + 重生

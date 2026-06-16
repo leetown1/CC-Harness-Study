@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "schema_doc": "学习进度状态机 · 陪学模式(提炼→读→测)专用",
   "created": "2026-06-14",
-  "updated": "2026-06-14",
+  "updated": "2026-06-16",
   "user_profile": {
     "background": "新手 / 产品研究向",
     "daily_hours": "2-4",
@@ -15,14 +15,14 @@
     "questions_per_quiz": 3,
     "pass_threshold": 0.8
   },
-  "current_day": null,
+  "current_day": 1,
   "days": {
     "day_1": {
       "title": "Harness + 六大支柱",
-      "stage": "not_started",
+      "stage": "lecture_ready",
       "source": "Claude Code 架构全景学习指南.md · Part 1",
-      "lecture_artifact": null,
-      "quiz_artifact": null,
+      "lecture_artifact": "学习进度/讲义/Day-01-Harness与六大支柱.md",
+      "quiz_artifact": "学习进度/讲义/Day-01-自测.md",
       "answers": null,
       "grade": null,
       "mastery_score": null,
@@ -33,9 +33,16 @@
           "from": null,
           "to": "not_started",
           "trigger": "initialization"
+        },
+        {
+          "at": "2026-06-16",
+          "from": "not_started",
+          "to": "lecture_ready",
+          "trigger": "lecture_written",
+          "note": "讲义 + 3 道自测题已出；待用户作答后批改并推进到 mastered / needs_re_read"
         }
       ],
-      "last_touched": "2026-06-14"
+      "last_touched": "2026-06-16"
     },
     "day_2": {
       "title": "Part 15 + 结语 + 仓库地图",
@@ -138,18 +145,24 @@
       "last_touched": "2026-06-14"
     }
   },
-  "review_queue": [],
+  "review_queue": [
+    {
+      "day": "day_1",
+      "scheduled_for": "2026-06-23",
+      "reason": "首次学习 7 天后复习（review_interval_days=7）"
+    }
+  ],
   "stats": {
     "days_total": 33,
     "days_initialized": 6,
-    "days_lecture_ready": 0,
+    "days_lecture_ready": 1,
     "days_mastered": 0,
     "needs_review": 0,
     "total_quizzes_given": 0,
     "total_questions_answered": 0,
     "total_correct": 0,
-    "current_streak_days": 0,
-    "longest_streak_days": 0
+    "current_streak_days": 1,
+    "longest_streak_days": 1
   },
   "transitions_log": [
     {
@@ -171,28 +184,35 @@
       "at": "2026-06-14",
       "event": "security_warning",
       "note": "API Key sk-cp-...JxkBsidET0MLOJCo5Z5AzQHOuPp1eJj8 暴露在对话历史中；强烈建议用户 revoke + 重生 + 重装 MCP"
+    },
+    {
+      "at": "2026-06-16",
+      "event": "day_1_lecture_ready",
+      "note": "Day 1 讲义 + 3 道自测题出完；user_profile.mode=tutor-lecturer-quizzer 首次落地；用户答复后批改并推进 mastered / needs_re_read"
     }
   ],
   "session_handoff": {
-    "current_session_end": "2026-06-14 ~00:53",
+    "current_session_end": "2026-06-16 16:05",
+    "current_session": "#2",
     "user_next_action": [
-      "1. 【安全】去 https://platform.minimaxi.com/user-center/payment/token-plan revoke 当前 key，重生新 key",
-      "2. 【安全】跑 `claude mcp remove MiniMax` 然后 `claude mcp add -s user MiniMax --env MINIMAX_API_KEY=<新key> --env MINIMAX_API_HOST=https://api.minimaxi.com -- uvx minimax-coding-plan-mcp -y`",
-      "3. /exit 当前 claude，重启一个新会话",
-      "4. 新会话第一句话：贴下面的【交接卡片】"
+      "1. 读 `学习进度/讲义/Day-01-Harness与六大支柱.md` 讲义",
+      "2. 做完 `学习进度/讲义/Day-01-自测.md` 3 道题",
+      "3. 把答案发给 Claude 批改",
+      "4. 【安全】记得之前那个 MiniMax API Key 还没 revoke——下次开会话前先处理"
     ],
-    "new_session_first_actions": [
-      "读 e:\\学术\\Agent学习\\.study-state.json 同步状态",
-      "调 web_search 查 'ultracode minimax' / 'ultracode anthropic' / 'claude code workflow mode'",
-      "基于搜索结果给用户讲清 Ultracode 真实机制",
-      "然后回到 Day 1 讲义（基于源码事实重写）",
-      "出 2-3 道自测题 + 批改 + 更新状态机 day_1: not_started → lecture_ready"
+    "next_session_first_actions": [
+      "读 state.json 同步进度（current_day=1，day_1.stage=lecture_ready）",
+      "等用户发 Day 1 自测题答案，逐题批改 + 追问",
+      "根据批改结果推进 day_1.stage 到 mastered / needs_re_read",
+      "讲 Day 2：读主指南 Part 15 + 结语 + 仓库地图",
+      "出 Day 2 自测题"
     ],
     "carryover_unfinished": [
-      "Day 1 讲义未出（已读 query.ts/Tool.ts/services/compact/QueryGuard.ts 拿到四件套事实）",
       "状态机方案改进未做（备份+显式事件钩子）",
-      "讲义目录 e:\\学术\\Agent学习\\讲义\\ 已建但空",
-      "用户对'Ultracode 心智模型'的新理解（行为准则 + MCP 外部能力）需要新会话验证"
-    ]
+      "用户已明确表示不要 Ultracode 内容——把这条从 carryover 移除",
+      "Day 1 批改未做（等用户答完）",
+      "API Key 仍暴露（用户未处理）"
+    ],
+    "ultracode_status": "已搜到充分证据（CSDN 逐梦苍穹 3 篇 + cnblogs AiFly 1 篇），但用户明确说'没要你讲 ultracode'——封存到 memory 或后续单独整理，不进 Day 1 讲义"
   }
 }
