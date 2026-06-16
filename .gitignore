@@ -1,3 +1,10 @@
 .DS_Store
 *.pyc
 node_modules/
+
+# 学习进度状态机的备份（仓库外的 .bak 文件 git 看不到，这层是防御性的）
+学习进度/state.json.bak.*
+
+# 临时调试文件
+*.tmp
+*.swp
